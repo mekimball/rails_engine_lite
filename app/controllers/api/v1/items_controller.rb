@@ -11,7 +11,7 @@ class Api::V1::ItemsController < ApplicationController
   def create
     item = Item.create(item_params)
     if item.save
-      render json: item
+      render json: item, status: 201
     end
   end
 
