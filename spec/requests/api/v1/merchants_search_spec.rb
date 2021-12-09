@@ -13,7 +13,7 @@ describe "Items Search API" do
 
     expect(response).to be_successful
 
-    expect(merchant.first[:attributes][:name]).to eq(merchant_1.name)
+    expect(merchant[:attributes][:name]).to eq(merchant_1.name)
   end
   it 'can find all items by name search' do
 

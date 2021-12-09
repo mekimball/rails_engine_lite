@@ -15,7 +15,7 @@ describe "Items Search API" do
 
     expect(response).to be_successful
 
-    expect(item.first[:attributes][:name]).to eq(item_2.name)
+    expect(item[:attributes][:name]).to eq(item_2.name)
   end
     it 'can find all items by name search' do
     merchant_1 = create(:merchant)
