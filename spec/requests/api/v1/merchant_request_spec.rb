@@ -7,11 +7,11 @@ describe 'Merchant API' do
     get '/api/v1/merchants'
 
     expect(response).to be_successful
-    
+
     parsed = JSON.parse(response.body, symbolize_names: true)
     merchants = parsed[:data]
     expect(merchants.count).to eq(3)
-    
+
     merchants.each do |merchant|
       expect(merchant).to have_key(:id)
       expect(merchant[:id]).to be_a(String)
@@ -21,17 +21,17 @@ describe 'Merchant API' do
       expect(merchant[:attributes][:name]).to be_a(String)
     end
   end
-    
+
   it 'returns a single merchant' do
     id = create(:merchant).id
-    
+
     get "/api/v1/merchants/#{id}"
 
     expect(response).to be_successful
-    
+
     parsed = JSON.parse(response.body, symbolize_names: true)
     merchant = parsed[:data]
-    
+
     expect(merchant).to have_key(:id)
     expect(merchant[:id]).to be_a(String)
     expect(merchant).to have_key(:attributes)
@@ -39,14 +39,27 @@ describe 'Merchant API' do
     expect(merchant[:attributes]).to have_key(:name)
     expect(merchant[:attributes][:name]).to be_a(String)
   end
-  
+
+  it 'returns an error if no single merchant' do
+    id = create(:merchant).id
+
+    get "/api/v1/merchants/#{id + 1}"
+
+    parsed = JSON.parse(response.body, symbolize_names: true)
+    merchant = parsed[:data]
+
+    expect(merchant).to eq({ details: "No merchant matches this id" })  
+  end
+
   it 'can return all a merchants items' do
     merchant_1 = Merchant.create!(name: "Moe's Tavern")
     merchant_2 = Merchant.create!(name: "Joe's Tavern")
-    item_1 = merchant_1.items.create!(name: "Flaming Moe", description: "It's delicious!", unit_price: 8.99)
-    item_2 = merchant_1.items.create!(name: "Flaming Homer", description: "It's more delicious!", unit_price: 9.99)
-    item_3 = merchant_2.items.create!(name: "Duff", description: "It's okay!", unit_price: 3.99)
-
+    item_1 = merchant_1.items.create!(name: 'Flaming Moe',
+                                      description: "It's delicious!", unit_price: 8.99)
+    item_2 = merchant_1.items.create!(name: 'Flaming Homer',
+                                      description: "It's more delicious!", unit_price: 9.99)
+    item_3 = merchant_2.items.create!(name: 'Duff', description: "It's okay!",
+                                      unit_price: 3.99)
 
     get "/api/v1/merchants/#{merchant_1.id}/items"
 
