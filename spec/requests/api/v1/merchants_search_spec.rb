@@ -27,7 +27,7 @@ describe 'Items Search API' do
     parsed = JSON.parse(response.body, symbolize_names: true)
     item = parsed[:data]
 
-    expect(item).to eq({:error=>"No merchant matches that phrase"})
+    expect(item).to eq({ error: 'No merchant matches that phrase' })
   end
 
   it 'can find all items by name search' do

@@ -48,7 +48,7 @@ describe 'Merchant API' do
     parsed = JSON.parse(response.body, symbolize_names: true)
     merchant = parsed[:data]
 
-    expect(merchant).to eq({ details: "No merchant matches this id" })  
+    expect(merchant).to eq({ details: 'No merchant matches this id' })
   end
 
   it 'can return all a merchants items' do
