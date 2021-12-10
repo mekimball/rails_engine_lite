@@ -65,9 +65,9 @@ describe 'Items Search API' do
     get "/api/v1/items/find_all?name=#{name}"
 
     parsed = JSON.parse(response.body, symbolize_names: true)
-    item = parsed[:error]
+    item = parsed[:data]
 
-    expect(item).to eq({ details: 'No items matches this id' })
+    expect(item).to eq([])
   end
 
   it 'gives an error if there are no name in all' do

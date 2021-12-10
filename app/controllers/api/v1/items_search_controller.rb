@@ -8,7 +8,7 @@ class Api::V1::ItemsSearchController < ApplicationController
     elsif params.include?(:min_price) || params.include?(:max_price)
       render json: ItemSerializer.new(Item.find_by_price(params))
     elsif Item.find_all_items(params[:name]).empty?
-      render json: { error: { details: 'No items matches this id' } },
+      render json: { data: [] },
              status: 200
     else
       render json: ItemSerializer.new(Item.find_all_items(params[:name]))
