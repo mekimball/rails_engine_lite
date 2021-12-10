@@ -55,7 +55,7 @@ describe 'Items Search API' do
     get "/api/v1/merchants/find_all?name=#{name}"
 
     parsed = JSON.parse(response.body, symbolize_names: true)
-    merchant = parsed[:error]
+    merchant = parsed[:data]
 
     expect(merchant).to eq([])
   end
