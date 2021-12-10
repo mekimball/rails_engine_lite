@@ -3,9 +3,10 @@ class Api::V1::MerchantItemsController < ApplicationController
     if Item.exists?(merchant_id: params[:merchant_id])
       render json: ItemSerializer.new(Item.where(merchant_id: params[:merchant_id]))
     else
-      require 'pry'; binding.pry
+      require 'pry'
+      binding.pry
       render json: { error: { details: 'No items matches this id' } },
-                    status: 404
+             status: 404
     end
   end
 
